@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbarKitchen"
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -23,25 +23,27 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
+            <TextView
+                android:id="@+id/tvYourKitchen"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:text="@string/your_kitchen"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:layout_margin="50dp" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_kitchen" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddIngredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="78dp"
+        android:layout_height="76dp"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@drawable/edit_button" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_kitchen" />
 
 </android.support.design.widget.CoordinatorLayout>

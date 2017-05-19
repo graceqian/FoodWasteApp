@@ -13,7 +13,7 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "Kitchen.db";
     public static final String TABLE_NAME = "Kitchen_table.db";
     public static final String INGREDIENT_COLUMN = "Ingredient";//column indicating ingredient i.e. tomato
-    public static final String AMOUNT_COLUMN = "Amount";//column indicating number of ingredients
+    public static final String QUANTITY_COLUMN = "Quantity";//column indicating number of ingredients
     public static final String UNITS_COLUMN = "Units";//column indicating units of ingredients i.e. mL or no units
 
     public KitchenDatabaseHelper(Context context) {
@@ -23,7 +23,7 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table" + TABLE_NAME + "Ingredient TEXT, Amount INTEGER, Units INTEGER");
+        db.execSQL("create table" + TABLE_NAME + "Ingredient TEXT, Quantity INTEGER, Units INTEGER");
     }
 
     @Override
