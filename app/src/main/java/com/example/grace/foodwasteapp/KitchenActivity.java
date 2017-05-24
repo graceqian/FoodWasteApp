@@ -1,22 +1,18 @@
 package com.example.grace.foodwasteapp;
 
-import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 
 public class KitchenActivity extends AppCompatActivity {
 
     KitchenDatabaseHelper kitchen_database;
     Button btnAddIngredient;
+    TextView KitchenData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +21,9 @@ public class KitchenActivity extends AppCompatActivity {
         kitchen_database = new KitchenDatabaseHelper(this);
 
         setContentView(R.layout.activity_kitchen);
+
+
+
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -40,6 +39,7 @@ public class KitchenActivity extends AppCompatActivity {
 //                toAddIngredient.putExtras(bundle);
 //                startActivity(toAddIngredient);
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(KitchenActivity.this);
+                mBuilder.setCancelable(true);
                 final View mView = getLayoutInflater().inflate(R.layout.activity_add_ingredient, null);
                 //define view in layout
                 final EditText etIngredient = (EditText)mView.findViewById(R.id.etEnterIngredient);
@@ -65,7 +65,31 @@ public class KitchenActivity extends AppCompatActivity {
             }
         });
 
+        //changes content_activity to display ingredients in the kitchen
+        KitchenData = (TextView)findViewById(R.id.tvKitchenData) ;
+        KitchenData.setText(displayData());
+
     }
+    //displays data
+    public String displayData(){
+        Cursor result = kitchen_database.getAllData();//THIS LINE DOES NOT WORK
+
+//        if there is no data
+        if(result.getCount() == 0){
+            //show message
+            return "You're kitchen is empty! Press the + to start adding ingredients.";
+        }
+
+        StringBuffer buffer = new StringBuffer();
+//        get the data one by one
+        while (result.moveToNext()){
+            buffer.append("Ingredient: " + result.getString(0) + "\n" +
+                    "Quantity: " + result.getString(1) + "\n" +
+                    "Units: " + result.getString(2) + "\n\n");
+        }
+        return buffer.toString();
+    }
+
 
     protected void addIngredientData(EditText etIngredient, EditText etQuantity, Spinner spinnerUnits){
         String ingredient  = etIngredient.getText().toString();
@@ -76,27 +100,7 @@ public class KitchenActivity extends AppCompatActivity {
                 Toast.makeText(KitchenActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(KitchenActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-
-//        btnAddIngredient.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        View mView = getLayoutInflater().inflate(R.layout.activity_add_ingredient, null);
-//                        //define view in layout
-//                        String ingredient = ((EditText)mView.findViewById(R.id.etEnterIngredient)).getText().toString();
-//                        Double quantity = Double.parseDouble(((EditText)mView.findViewById(R.id.etEnterQuantity)).getText().toString());
-//                        String units = ((Spinner)mView.findViewById(R.id.spinnerUnits)).getSelectedItem().toString();
-//
-////                        String ingredient = ((EditText) findViewById(R.id.etEnterIngredient)).getText().toString();
-////                        Double quantity = Double.valueOf(((EditText) findViewById(R.id.etEnterQuantity)).getText().toString());
-////                        String units = ((Spinner) findViewById(R.id.spinner)).getSelectedItem().toString();
-//                        boolean isInserted = kitchen_database.insertData(ingredient, quantity, units);
-//                        if (isInserted)
-//                            Toast.makeText(KitchenActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-//                        else
-//                            Toast.makeText(KitchenActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
+        KitchenData = (TextView)findViewById(R.id.tvKitchenData) ;
+        KitchenData.setText(displayData());
     }
 }
