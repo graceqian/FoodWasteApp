@@ -98,7 +98,7 @@
     <string name="add_ingredient">Add Ingredient</string>
     <string name="error_empty_fields">Please fill any empty fields</string>
     <string-array name="units_array">
-        <item>units</item>
+        <item>none</item>
         <item>cups</item>
         <item>lbs</item>
         <item>mL</item>

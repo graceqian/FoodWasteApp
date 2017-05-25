@@ -26,38 +26,6 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
         super(context, DATABASE_NAME, null, 1);
 //        SQLiteDatabase db = this.getWritableDatabase();
     }
-//
-//    @Override
-//    public void onCreate(SQLiteDatabase db) {
-//        //try {
-//            db.execSQL("CREATE TABLE " + TABLE_NAME + " (Ingredient TEXT,Quantity DOUBLE,Units INTEGER);");
-////        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,SURNAME TEXT,MARKS INTEGER)");
-//
-//        //}catch (Exception e){}
-//    }
-//
-//    @Override
-//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("DROP TABLE IF EXISTS");
-//        onCreate(db);
-//    }
-//
-    public boolean insertData(String ingredient, Double quantity, String units){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(INGREDIENT_COLUMN,ingredient);
-        contentValues.put(QUANTITY_COLUMN,quantity);
-        contentValues.put(UNITS_COLUMN,units);
-        return -1 != db.insert(TABLE_NAME, null, contentValues);
-    }
-//
-//    public Cursor getAllData(){
-//        //the problem is probably here
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
-//        return res;//result stores all data
-//    }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -67,6 +35,15 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
                 QUANTITY_COLUMN + " REAL," + UNITS_COLUMN + " TEXT)";
         db.execSQL(SQL_String);
 
+    }
+
+    public boolean insertData(String ingredient, Double quantity, String units){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(INGREDIENT_COLUMN,ingredient);
+        contentValues.put(QUANTITY_COLUMN,quantity);
+        contentValues.put(UNITS_COLUMN,units);
+        return -1 != db.insert(TABLE_NAME, null, contentValues);
     }
 
     @Override
@@ -97,5 +74,10 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
 
 //        return db.delete(TABLE_NAME, "ID = ?",new String[] {id});
         return null;
+    }
+
+    //accessor method for databse
+    public SQLiteDatabase getDatabase(){
+        return this.getWritableDatabase();
     }
 }

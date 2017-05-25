@@ -34,15 +34,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAddIngredient"
-        android:layout_width="78dp"
-        android:layout_height="76dp"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/edit_button" />
-
     <include
         android:id="@+id/include"
         layout="@layout/content_kitchen" />
