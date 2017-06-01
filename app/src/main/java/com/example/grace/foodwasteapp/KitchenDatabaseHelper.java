@@ -42,7 +42,12 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
         ContentValues contentValues = new ContentValues();
         contentValues.put(INGREDIENT_COLUMN,ingredient);
         contentValues.put(QUANTITY_COLUMN,quantity);
-        contentValues.put(UNITS_COLUMN,units);
+        //if units equals "none" then an empty string is added
+        if(units.equals("none")){
+            contentValues.put(UNITS_COLUMN, "");
+        }
+        else
+            contentValues.put(UNITS_COLUMN,units);
         return -1 != db.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -64,16 +69,22 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
         ContentValues contentValues = new ContentValues();
         contentValues.put(INGREDIENT_COLUMN,ingredient);
         contentValues.put(QUANTITY_COLUMN,quantity);
-        contentValues.put(UNITS_COLUMN,units);
-//        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
+        //if units equals "none" then an empty string is added
+        if(units.equals("none")){
+            contentValues.put(UNITS_COLUMN, "");
+        }
+        else
+            contentValues.put(UNITS_COLUMN,units);
+        db.update(TABLE_NAME, contentValues, INGREDIENT_COLUMN + " = ?" ,new String[] { ingredient });
         return true;
     }
 
-    public Integer deleteData (String id) {
+    //deletes rows with the ingredient specified and returns the number of deleted rows
+    public Integer deleteIngredient (String ingredient) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-//        return db.delete(TABLE_NAME, "ID = ?",new String[] {id});
-        return null;
+        return db.delete(TABLE_NAME,
+                INGREDIENT_COLUMN + " = ?",//where clause (what is the ingredient? --> "INGREDIENT = ?"
+                new String[] {ingredient});//value
     }
 
     //accessor method for databse

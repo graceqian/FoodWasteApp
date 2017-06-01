@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.grace.foodwasteapp.AddIngredientActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -15,13 +14,11 @@
         android:text="@string/ingredient"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="18sp"
+        app:layout_constraintRight_toLeftOf="@+id/etEnterQuantity"
+        tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="38dp"
-        app:layout_constraintBottom_toBottomOf="@+id/etEnterIngredient"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="38dp" />
+        app:layout_constraintBottom_toTopOf="@+id/etEnterQuantity"
+        android:layout_marginBottom="24dp" />
 
     <TextView
         android:id="@+id/tvQuantity"
@@ -31,82 +28,75 @@
         android:text="@string/quantity"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="18sp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="5dp"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddIngredient"
         tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etEnterQuantity"
         android:layout_marginLeft="38dp" />
 
     <TextView
         android:id="@+id/tvUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="130dp"
         android:text="@string/units"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="18sp"
-        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="@+id/btnAddIngredient"
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toTopOf="@+id/etEnterQuantity"
-        android:layout_marginRight="28dp" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etEnterQuantity"
+        tools:layout_constraintBaseline_creator="1"
+        android:layout_marginRight="130dp" />
 
     <EditText
         android:id="@+id/etEnterIngredient"
         android:layout_width="0dp"
         android:layout_height="39dp"
+        android:layout_marginEnd="14dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="24sp"
-        tools:layout_constraintTop_creator="1"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvIngredient"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="88dp"
+        app:layout_constraintRight_toRightOf="@+id/btnAddIngredient"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tvIngredient"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginRight="14dp" />
 
     <EditText
         android:id="@+id/etEnterQuantity"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="13dp"
         android:ems="10"
         android:inputType="number"
-        android:textSize="24sp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="83dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAddIngredient"
-        android:layout_marginEnd="99dp"
-        app:layout_constraintRight_toRightOf="@+id/btnAddIngredient"
-        android:layout_marginTop="63dp"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvQuantity"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/tvQuantity"
+        app:layout_constraintRight_toLeftOf="@+id/tvUnits"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="59dp"
-        app:layout_constraintLeft_toLeftOf="@+id/tvQuantity"
-        app:layout_constraintTop_toTopOf="@+id/etEnterIngredient"
-        android:layout_marginLeft="83dp"
-        android:layout_marginRight="99dp" />
+        tools:layout_constraintRight_creator="1" />
 
     <Button
         android:id="@+id/btnAddIngredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="326dp"
+        android:layout_height="48dp"
         android:text="@string/add_ingredient"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="75dp"
-        app:layout_constraintTop_toBottomOf="@+id/etEnterIngredient"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/tvQuantity"
-        android:layout_marginLeft="17dp" />
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="202dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="18dp" />
 
     <Spinner
         android:id="@+id/spinnerUnits"
@@ -114,10 +104,13 @@
         android:layout_height="30dp"
         android:entries="@array/units_array"
         android:visibility="visible"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/etEnterIngredient"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUnits"
-        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintRight_toRightOf="@+id/btnAddIngredient"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/btnAddIngredient" />
+        app:layout_constraintLeft_toRightOf="@+id/tvUnits"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="14dp" />
 </android.support.constraint.ConstraintLayout>

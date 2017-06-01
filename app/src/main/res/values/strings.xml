@@ -97,11 +97,15 @@
     <string name="units">Units:</string>
     <string name="add_ingredient">Add Ingredient</string>
     <string name="error_empty_fields">Please fill any empty fields</string>
+    <string name="update_ingredient">Update Ingredient</string>
+    <string name="delete_ingredient">Delete Ingredient</string>
     <string-array name="units_array">
         <item>none</item>
+        <item>servings</item>
+        <item>package</item>
         <item>cups</item>
-        <item>lbs</item>
-        <item>mL</item>
-        <item>L</item>
+        <item>tbsp</item>
+        <item>oz</item>
+        <item>g</item>
     </string-array>
 </resources>

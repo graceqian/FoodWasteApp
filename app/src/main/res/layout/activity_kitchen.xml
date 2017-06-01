@@ -36,6 +36,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_kitchen" />
+        layout="@layout/content_kitchen"
+        android:layout_height="439dp" />
 
 </android.support.design.widget.CoordinatorLayout>

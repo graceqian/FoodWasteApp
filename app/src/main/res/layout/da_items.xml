@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--this is for the listView in kitchen activity-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvDisplayIngredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/ingredient"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvDisplayQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvDisplayIngredient"
+        android:layout_alignBottom="@+id/tvDisplayIngredient"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/tvDisplayUnits"
+        android:layout_toStartOf="@+id/tvDisplayUnits"
+        android:text="0"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvDisplayUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvDisplayQuantity"
+        android:layout_alignBottom="@+id/tvDisplayQuantity"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="39dp"
+        android:layout_marginRight="39dp"
+        android:text="@string/units"
+        android:textSize="24sp" />
+</RelativeLayout>
