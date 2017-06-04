@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.grace.foodwasteapp.AboutRecipe">
+    tools:context="com.example.grace.foodwasteapp.AboutRecipeActivity">
 
     <TextView
         android:id="@+id/tvAboutRecipeName"
@@ -22,15 +22,16 @@
         android:id="@+id/btnMakeRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:onClick="onClickMakeRecipe"
         android:text="Make This Recipe!"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/tvAboutRecipeTime"
@@ -38,10 +39,11 @@
         android:layout_height="wrap_content"
         android:text="Time"
         android:textSize="18sp"
-        tools:layout_editor_absoluteY="65dp"
         android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvAboutRecipeName" />
 
     <TextView
         android:id="@+id/tvAboutRecipeRating"
@@ -62,20 +64,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="24sp"
         android:layout_marginLeft="17dp"
-        app:layout_constraintLeft_toLeftOf="@+id/listView"
+        app:layout_constraintLeft_toLeftOf="@+id/lvRecipeIngredients"
         android:layout_marginTop="52dp"
         app:layout_constraintTop_toBottomOf="@+id/tvAboutRecipeName" />
-
-    <TextView
-        android:id="@+id/tvRecipeCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course:"
-        android:textSize="18sp"
-        android:layout_marginBottom="13dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvRecipeCuisine"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/tvRecipeCuisine"
@@ -89,7 +80,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnMakeRecipe" />
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/lvRecipeIngredients"
         android:layout_width="wrap_content"
         android:layout_height="202dp"
         android:layout_marginBottom="91dp"
@@ -100,6 +91,7 @@
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIngredientsInRecipe" />
+        app:layout_constraintTop_toBottomOf="@+id/tvIngredientsInRecipe"
+        android:clickable="false"/>
 
 </android.support.constraint.ConstraintLayout>

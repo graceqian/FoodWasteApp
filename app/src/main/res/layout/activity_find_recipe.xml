@@ -17,7 +17,9 @@
             android:id="@+id/svRecipeSearch"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:contextClickable="false" />
+            android:contextClickable="false"
+            android:queryHint="Search Recipes"
+            android:iconifiedByDefault="false"/>
 
         <ListView
             android:id="@+id/lvRecipes"
