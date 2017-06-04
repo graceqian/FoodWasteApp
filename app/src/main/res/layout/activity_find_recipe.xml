@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.grace.foodwasteapp.FindRecipeActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <SearchView
+            android:id="@+id/svRecipeSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:contextClickable="false" />
+
+        <ListView
+            android:id="@+id/lvRecipes"
+            android:layout_width="wrap_content"
+            android:layout_height="396dp" />
+
+        <Button
+            android:id="@+id/btnFilterRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Filter Recipes" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

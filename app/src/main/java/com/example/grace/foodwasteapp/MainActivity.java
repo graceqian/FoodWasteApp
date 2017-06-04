@@ -18,4 +18,9 @@ public class MainActivity extends AppCompatActivity {
         Intent toKitchen = new Intent(this, KitchenActivity.class);
         startActivity(toKitchen);
     }
+
+    protected void onClickFindRecipe(View v){
+        Intent toFindRecipe = new Intent(this, FindRecipeActivity.class);
+        startActivity(toFindRecipe);
+    }
 }

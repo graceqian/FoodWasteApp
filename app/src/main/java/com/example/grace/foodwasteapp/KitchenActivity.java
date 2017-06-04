@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import android.content.DialogInterface;
-import android.app.AlertDialog.Builder;
 
 import java.util.ArrayList;
-
-import static android.support.constraint.R.id.parent;
 
 public class KitchenActivity extends AppCompatActivity {
 
@@ -189,7 +185,7 @@ public class KitchenActivity extends AppCompatActivity {
             //https://www.youtube.com/watch?v=3k3CunDZpFk
         //https://www.youtube.com/watch?v=WRANgDgM2Zg DrBFraser
         public MyListAdapter() {
-                super(KitchenActivity.this, R.layout.da_items, ingredientList);
+                super(KitchenActivity.this, R.layout.list_ingredients, ingredientList);
             }
 
             @Override
@@ -197,7 +193,7 @@ public class KitchenActivity extends AppCompatActivity {
                 // Make sure we have a view to work with (may have been given null)
                 View itemView = convertView;
                 if (itemView == null) {
-                    itemView = getLayoutInflater().inflate(R.layout.da_items, parent, false);//create a new view
+                    itemView = getLayoutInflater().inflate(R.layout.list_ingredients, parent, false);//create a new view
                     //inflater takes a piece of xml code and inflates into an object to be displayed on the screen
                 }
 
@@ -256,12 +252,12 @@ public class KitchenActivity extends AppCompatActivity {
                 final String units = ingredientClicked.getUnits();
 
                 //sets text boxes in dialog to match ingredient logged
-                ((EditText)mView.findViewById(R.id.etEditIngredient)).setText(ingredient);
+                ((TextView)mView.findViewById(R.id.tvEditIngredient)).setText(ingredient);
                 ((EditText)mView.findViewById(R.id.etEditQuantity)).setText(quantity + "");
 //                ((Spinner)mView.findViewById(R.id.spinnerUnits)).setSelection(0);//TODO find what positon
 
                 //define view in layout and change variables to be final
-                final EditText etIngredient = ((EditText)mView.findViewById(R.id.etEditIngredient));
+                final TextView tvEditIngredient = ((TextView)mView.findViewById(R.id.tvEditIngredient));
                 final EditText etQuantity = (EditText)mView.findViewById(R.id.etEditQuantity);
                 final Spinner spinnerUnits = (Spinner)mView.findViewById(R.id.spinnerUnits);
 
@@ -275,10 +271,10 @@ public class KitchenActivity extends AppCompatActivity {
                 btnUpdateIngredient.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        String editedIngredient = etIngredient.getText().toString();
+                        String editedIngredient = tvEditIngredient.getText().toString();
                         Double editedQuantity = Double.parseDouble(etQuantity.getText().toString());
 //                        String editedUnits = spinnerUnits.getSelectedItem().toString();
-                        if(!etIngredient.getText().toString().isEmpty() &&
+                        if(!tvEditIngredient.getText().toString().isEmpty() &&
                                 !etQuantity.getText().toString().isEmpty()){
                             //TODO UPDATE INSTEAD OF ADD
                             kitchen_database.updateData(ingredient, quantity, units);
@@ -293,8 +289,9 @@ public class KitchenActivity extends AppCompatActivity {
                             }
                             kitchen_database.updateData(editedIngredient,editedQuantity, units);
                             populateListView();
-                            //TODO if they changed the ingredient name, add the data and remove that row with the old ingredient name
+                            Toast.makeText(KitchenActivity.this,"Ingredient updated", Toast.LENGTH_SHORT).show();
                             editIngredientDialogue.dismiss();
+
                         } else{
                             Toast.makeText(KitchenActivity.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
                         }
