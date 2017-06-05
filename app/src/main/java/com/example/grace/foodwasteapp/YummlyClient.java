@@ -34,7 +34,7 @@ public class YummlyClient {
         //parameters for query search, allowedAllergies, allowedDiets, and allowed Cuisines
         //@Query("allowedAllergy[]") List<String> allowedAllergy, @Query("allowedDiet[]") List<String> allowedDiet, @Query("allowedCuisine") List<String> allowedCuisine,
         @GET("/v1/api/recipes")//at 24 minutes is when he explains the interface
-        Call<GetRecipeResponse> getRecipeResponse(@Query("_app_id") String id, @Query("_app_key") String appKey, @Query("q") String search, @Query(value = "allowedAllergy%5b%5d", encoded = true) List<String> allergies, @Query(value = "allowedDiet%5b%5d", encoded = true) List<String> diets);
+        Call<GetRecipeResponse> getRecipeResponse(@Query("_app_id") String id, @Query("_app_key") String appKey, @Query("q") String search, @Query(value = "allowedAllergy%5b%5d", encoded = true) List<String> allergies, @Query(value = "allowedDiet%5b%5d", encoded = true) List<String> diets, @Query(value = "allowedCuisine%5b%5d", encoded = true) List<String> cuisine);
 
 //        @GET("group/{id}/users")
 //        Call<List<User>> groupList(@Path("id") int groupId, @Query("sort") String sort);

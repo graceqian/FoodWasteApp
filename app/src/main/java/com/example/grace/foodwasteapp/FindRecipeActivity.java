@@ -174,7 +174,8 @@ public class FindRecipeActivity extends AppCompatActivity {
     public void callApi(String query){
         List<String> allergiesSelected = getIntent().getStringArrayListExtra("allergies selected");
         List<String> dietsSelected = getIntent().getStringArrayListExtra("diets selected");
-        Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY, query, allergiesSelected, dietsSelected);
+        List<String> cuisinesSelected = getIntent().getStringArrayListExtra("cuisines selected");
+        Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY, query, allergiesSelected, dietsSelected, cuisinesSelected);
 
         //must call api asynchronously because there is a UI thread
         call.enqueue(new Callback<GetRecipeResponse>() {

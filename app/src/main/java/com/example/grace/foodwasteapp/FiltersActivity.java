@@ -30,6 +30,7 @@ public class FiltersActivity extends AppCompatActivity {
     FilterTypesAdapter adapter;
     HashSet<String> allergiesSelected;
     HashSet<String> dietsSelected;
+    HashSet<String> cuisinesSelected;
     HashMap<String,String> callValues;//this is a hardcoded. to retrieve argument for
     //certain dietary and allergic restrictions, I would have to parse a JSONP file, instead of
     //a JSON file. I did some research that said that it was possible to use the retrofit library
@@ -45,6 +46,7 @@ public class FiltersActivity extends AppCompatActivity {
 
         allergiesSelected = new HashSet<String>();
         dietsSelected = new HashSet<String>();
+        cuisinesSelected = new HashSet<String>();
 
         filterTypes = new HashMap<String, List<String>>();//TODO if time permits, add other things like holidays etc
 
@@ -67,8 +69,19 @@ public class FiltersActivity extends AppCompatActivity {
         allergies.add("Tree Nut");
         allergies.add("Wheat");
 
-        filterTypes.put("diets", diets);
-        filterTypes.put("allergies", allergies);
+        List<String> cuisines = new ArrayList<String>();
+        cuisines.add("American");
+        cuisines.add("Italian");
+        cuisines.add("Asian");
+        cuisines.add("Mexican");
+        cuisines.add("Indian");
+        cuisines.add("Chinese");
+        cuisines.add("French");
+        cuisines.add("Spanish");
+
+        filterTypes.put("Diets", diets);
+        filterTypes.put("Allergies", allergies);
+        filterTypes.put("Cuisines", cuisines);
 
         filterTypesList = new ArrayList<String>(filterTypes.keySet());
 
@@ -106,6 +119,16 @@ public class FiltersActivity extends AppCompatActivity {
         callValues.put("Sulfite","401%5ESulfite-Free");
         callValues.put("Tree Nut","395%5ETree Nut-Free");
         callValues.put("Wheat","392%5EWheat-Free");
+
+        //http://api.yummly.com/v1/api/metadata/cuisine?_app_id=26edbdd7&_app_key=e821c0abc1c766b3cd3f2a2c23023113
+        callValues.put("American","cuisine%5Ecuisine-american");
+        callValues.put("Italian","cuisine%5Ecuisine-italian");
+        callValues.put("Asian","cuisine%5Ecuisine-asian");
+        callValues.put("Mexican","cuisine%5Ecuisine-mexican");
+        callValues.put("Indian","cuisine%5Ecuisine-indian");
+        callValues.put("Chinese","cuisine%5Ecuisine-chinese");
+        callValues.put("French","cuisine%5Ecuisine-french");
+        callValues.put("Spanish","cuisine%5Ecuisine-spanish");
 
 
 
@@ -200,23 +223,29 @@ public class FiltersActivity extends AppCompatActivity {
         CheckBox checkBox = (CheckBox)v.findViewById(R.id.cbFilter);
         String checkBoxText = checkBox.getText().toString();
         if(checkBox.isChecked()){
-            if(filterTypes.get("allergies").contains(checkBoxText)) {//checked item is an allergy
+            if(filterTypes.get("Allergies").contains(checkBoxText)) {//checked item is an allergy
                 allergiesSelected.add(callValues.get(checkBoxText));
 //                allergiesSelected.add(checkBoxText);
             }
-            else {//checked item is a diet
+            else if(filterTypes.get("Diets").contains(checkBoxText)){//checked item is a diet
                 dietsSelected.add(callValues.get(checkBoxText));
 //                dietsSelected.add(checkBoxText);
             }
+            else{//checked item is a cuisine
+                cuisinesSelected.add(callValues.get(checkBoxText));
+            }
         }
         else{
-            if(filterTypes.get("allergies").contains(checkBoxText)) {//checked item is an allergy
+            if(filterTypes.get("Allergies").contains(checkBoxText)) {//unchecked item is an allergy
                 allergiesSelected.remove(callValues.get(checkBoxText));
 //                allergiesSelected.remove(checkBoxText);
             }
-            else {//checked item is a diet
+            else if(filterTypes.get("Diets").contains(checkBoxText)){//unchecked item is a diet
                 dietsSelected.remove(callValues.get(checkBoxText));
 //                dietsSelected.remove(checkBoxText);
+            }
+            else{//unchecked item is a cuisine
+                cuisinesSelected.remove(callValues.get(checkBoxText));
             }
         }
     }
@@ -228,6 +257,9 @@ public class FiltersActivity extends AppCompatActivity {
             toFindRecipe.putStringArrayListExtra("allergies selected", new ArrayList<String>(allergiesSelected));
         if(dietsSelected.size() != 0)
             toFindRecipe.putStringArrayListExtra("diets selected", new ArrayList<String>(dietsSelected));
+        if(cuisinesSelected.size() !=0){
+            toFindRecipe.putStringArrayListExtra("cuisines selected", new ArrayList<String>(cuisinesSelected));
+        }
         toFindRecipe.putExtra("query", getIntent().getStringExtra("query"));//pass query back
         startActivity(toFindRecipe);
     }
