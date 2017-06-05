@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -26,25 +28,36 @@ public class FindRecipeActivity extends AppCompatActivity {
     private GetRecipeResponse recipeResponse;
     private final String APP_ID = "26edbdd7";
     private final String APP_KEY = "e821c0abc1c766b3cd3f2a2c23023113";
+    private YummlyClient.YummlyApiInterface client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_recipe);
 
+
+
         Retrofit.Builder builder = new Retrofit.Builder().
                 baseUrl("http://api.yummly.com/v1").
                 addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
-        final YummlyClient.YummlyApiInterface client = retrofit.create(YummlyClient.YummlyApiInterface.class);
+        client = retrofit.create(YummlyClient.YummlyApiInterface.class);
+        SearchView sv = (SearchView)findViewById(R.id.svRecipeSearch);
+        if(getIntent().getStringExtra("query") == null){
+            sv.setIconified(false);
+        } else{
+            sv.setQuery(getIntent().getStringExtra("query"), true);
+            callApi(getIntent().getStringExtra("query"));
+        }
 
-        //handling queries in search bar
-        SearchView searchView = (SearchView) findViewById(R.id.svRecipeSearch);
+//        handling queries in search bar
+        final SearchView searchView = sv;
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 callSearch(query);
+                searchView.clearFocus();
                 return true;
             }
 
@@ -57,35 +70,13 @@ public class FindRecipeActivity extends AppCompatActivity {
             }
 
             public void callSearch(String query) {
-                Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY,query);
-
-                //must call api asynchronously because there is a UI thread
-                call.enqueue(new Callback<GetRecipeResponse>() {
-                    @Override
-                    public void onResponse(Response<GetRecipeResponse> response, Retrofit retrofit) {
-                        recipeResponse = response.body();
-                        if(recipeResponse == null)
-                            Toast.makeText(FindRecipeActivity.this, "its null" , Toast.LENGTH_SHORT).show();
-
-                        //build adapter
-                        ArrayAdapter<Match> adapter = new RecipeAdapter();
-
-                        //config list view
-                        ListView list = (ListView)findViewById(R.id.lvRecipes);
-                        list.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Toast.makeText(FindRecipeActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                callApi(query);
             }
 
         });
 
-//        //Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY,"onion+soup");
-//
+        //Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY,"onion+soup");
+
 //        //must call api asynchronously because there is a UI thread
 //        call.enqueue(new Callback<GetRecipeResponse>() {
 //            @Override
@@ -111,6 +102,102 @@ public class FindRecipeActivity extends AppCompatActivity {
         registerRecipeClickCallback();
     }
 
+//    protected void onStart(){
+//        super.onStart();
+//
+//        setContentView(R.layout.activity_find_recipe);
+//
+//        SearchView sv = (SearchView)findViewById(R.id.svRecipeSearch);
+//        sv.setQuery(getIntent().getStringExtra("query"), true);
+//        sv.clearFocus();
+//        Intent asdf = getIntent();
+//
+//        Retrofit.Builder builder = new Retrofit.Builder().
+//                baseUrl("http://api.yummly.com/v1").
+//                addConverterFactory(GsonConverterFactory.create());
+//
+//        Retrofit retrofit = builder.build();
+//        final YummlyClient.YummlyApiInterface client = retrofit.create(YummlyClient.YummlyApiInterface.class);
+//
+//        //handling queries in search bar
+//        final SearchView searchView = (SearchView) findViewById(R.id.svRecipeSearch);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                callSearch(query);
+//                searchView.clearFocus();
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+////              if (searchView.isExpanded() && TextUtils.isEmpty(newText)) {
+//                callSearch(newText);
+////              }
+//                return true;
+//            }
+//
+//            public void callSearch(String query) {
+//                List<String> allergiesSelected = getIntent().getStringArrayListExtra("allergies selected");
+//                List<String> dietsSelected = getIntent().getStringArrayListExtra("diets selected");
+//                Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY,query, allergiesSelected, dietsSelected);
+//
+//                //must call api asynchronously because there is a UI thread
+//                call.enqueue(new Callback<GetRecipeResponse>() {
+//                    @Override
+//                    public void onResponse(Response<GetRecipeResponse> response, Retrofit retrofit) {
+//                        recipeResponse = response.body();
+//                        if(recipeResponse == null)
+//                            Toast.makeText(FindRecipeActivity.this, "its null" , Toast.LENGTH_SHORT).show();
+//
+//                        //build adapter
+//                        ArrayAdapter<Match> adapter = new RecipeAdapter();
+//
+//                        //config list view
+//                        ListView list = (ListView)findViewById(R.id.lvRecipes);
+//                        list.setAdapter(adapter);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Throwable t) {
+//                        Toast.makeText(FindRecipeActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//
+//        });
+//
+//        registerRecipeClickCallback();
+//
+//    }
+
+    public void callApi(String query){
+        List<String> allergiesSelected = getIntent().getStringArrayListExtra("allergies selected");
+        List<String> dietsSelected = getIntent().getStringArrayListExtra("diets selected");
+        Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY, query, allergiesSelected, dietsSelected);
+
+        //must call api asynchronously because there is a UI thread
+        call.enqueue(new Callback<GetRecipeResponse>() {
+            @Override
+            public void onResponse(Response<GetRecipeResponse> response, Retrofit retrofit) {
+                recipeResponse = response.body();
+                if(recipeResponse == null)
+                    Toast.makeText(FindRecipeActivity.this, "its null" , Toast.LENGTH_SHORT).show();
+
+                //build adapter
+                ArrayAdapter<Match> adapter = new RecipeAdapter();
+
+                //config list view
+                ListView list = (ListView)findViewById(R.id.lvRecipes);
+                list.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(FindRecipeActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     public class RecipeAdapter extends ArrayAdapter<Match> {
 
@@ -177,5 +264,12 @@ public class FindRecipeActivity extends AppCompatActivity {
                 startActivity(toAboutRecipe);
             }
         });
+    }
+
+    protected void onClickFilters(View v){
+        Intent toFilters = new Intent(this, FiltersActivity.class);
+        SearchView sv = (SearchView)findViewById(R.id.svRecipeSearch);
+        toFilters.putExtra("query", sv.getQuery().toString());
+        startActivity(toFilters);
     }
 }

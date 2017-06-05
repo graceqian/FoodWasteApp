@@ -72,12 +72,11 @@
         android:id="@+id/tvRecipeCuisine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cuisine:"
-        android:textSize="18sp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnMakeRecipe" />
+        android:layout_marginLeft="16dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnMakeRecipe"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ListView
         android:id="@+id/lvRecipeIngredients"

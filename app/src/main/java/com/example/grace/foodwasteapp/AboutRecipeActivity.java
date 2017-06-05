@@ -30,8 +30,8 @@ public class AboutRecipeActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.tvAboutRecipeTime)).setText(intent.getStringExtra("time"));//recipe time
         ((TextView)findViewById(R.id.tvAboutRecipeRating)).setText("Rating: " + intent.getStringExtra("rating"));//recipe rating
         ((TextView)findViewById(R.id.tvIngredientsInRecipe)).setText(recipeIngredientList.size() + " Ingredients");//recipe rating
-        //TODO figure out why its null, if you cant, jsut get rid fo this
-        ((TextView)findViewById(R.id.tvRecipeCuisine)).setText("Cuisine: " + intent.getStringExtra("cuisine"));//recipe cuisine
+        if(intent.getStringExtra("cuisine") != null)
+            ((TextView)findViewById(R.id.tvRecipeCuisine)).setText("Cuisine: " + intent.getStringExtra("cuisine"));//recipe cuisine
 
 
         //build adapter
@@ -47,7 +47,7 @@ public class AboutRecipeActivity extends AppCompatActivity {
         //https://www.youtube.com/watch?v=3k3CunDZpFk
         //https://www.youtube.com/watch?v=WRANgDgM2Zg DrBFraser
         public RecipeIngredientAdapter() {
-            super(AboutRecipeActivity.this, R.layout.list_recipe_ingredients, recipeIngredientList);
+            super(AboutRecipeActivity.this, R.layout.list_simple, recipeIngredientList);
         }
 
         @Override
@@ -55,7 +55,7 @@ public class AboutRecipeActivity extends AppCompatActivity {
             // Make sure we have a view to work with (may have been given null)
             View itemView = convertView;
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.list_recipe_ingredients, parent, false);//create a new view
+                itemView = getLayoutInflater().inflate(R.layout.list_simple, parent, false);//create a new view
                 //inflater takes a piece of xml code and inflates into an object to be displayed on the screen
             }
 
@@ -67,7 +67,7 @@ public class AboutRecipeActivity extends AppCompatActivity {
             // Fill the view
 
             // ingredient:
-            TextView ingredientText = (TextView) itemView.findViewById(R.id.tvRecipeIngredient);
+            TextView ingredientText = (TextView) itemView.findViewById(R.id.tvSimpleItem);
             ingredientText.setText(currentIngredient);
 
             return itemView;

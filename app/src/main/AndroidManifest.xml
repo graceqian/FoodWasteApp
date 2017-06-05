@@ -23,7 +23,8 @@
             android:label="@string/title_activity_kitchen"
             android:theme="@style/AppTheme.AddIngredientTheme" />
         <activity android:name=".FindRecipeActivity" />
-        <activity android:name=".AboutRecipeActivity"></activity>
+        <activity android:name=".AboutRecipeActivity" />
+        <activity android:name=".FiltersActivity"></activity>
     </application>
 
 </manifest>

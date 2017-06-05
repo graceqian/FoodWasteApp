@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:contextClickable="false"
-            android:queryHint="Search Recipes"
-            android:iconifiedByDefault="false"/>
+            android:queryHint="Search Recipes" />
+
+        <!--android:iconifiedByDefault="false"-->
 
         <ListView
             android:id="@+id/lvRecipes"
@@ -29,7 +30,8 @@
         <Button
             android:id="@+id/btnFilterRecipes"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
+            android:onClick="onClickFilters"
             android:text="Filter Recipes" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

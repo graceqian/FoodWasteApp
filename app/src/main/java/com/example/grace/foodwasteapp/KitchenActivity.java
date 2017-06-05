@@ -219,7 +219,6 @@ public class KitchenActivity extends AppCompatActivity {
                 return itemView;
             }
         }
-    //TODO add to list view method when you add a new item
 
 
     //method is called when the user clicks on a displayed ingredient.
