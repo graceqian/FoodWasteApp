@@ -22,7 +22,7 @@
 
     KitchenDatabaseHelper kitchen_database;
     Button btnAddIngredient;
-    ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();//TODO make a hashmap??
+    ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
     HashMap<String, Integer> spinnerPositions;//<units, position>
 
     @Override
@@ -113,7 +113,7 @@
 
 //        if there is no data
         if(result.getCount() == 0){
-            //TODO show message Your kitchen is empty! Press the + to start adding ingredients.
+            Toast.makeText(KitchenActivity.this, "You're Kitchen is Empty!", Toast.LENGTH_LONG).show();
         }
 
         ArrayList<String> ingredients = new ArrayList<String>();
@@ -207,7 +207,7 @@
                 ((TextView)mView.findViewById(R.id.tvEditIngredient)).setText(ingredient);
                 ((EditText)mView.findViewById(R.id.etEditQuantity)).setText(quantity + "");
                 boolean asdf = ((Spinner)mView.findViewById(R.id.spinnerEditUnits)) == null;
-                ((Spinner)mView.findViewById(R.id.spinnerEditUnits)).setSelection(spinnerPositions.get(units));//TODO find what positon
+                ((Spinner)mView.findViewById(R.id.spinnerEditUnits)).setSelection(spinnerPositions.get(units));
 
                 //define view in layout and change variables to be final
                 final TextView tvEditIngredient = ((TextView)mView.findViewById(R.id.tvEditIngredient));
@@ -230,6 +230,7 @@
                                 !etQuantity.getText().toString().isEmpty()){
 //                            kitchen_database.updateData(ingredient, quantity, units);
                             kitchen_database.updateData(ingredient, editedQuantity, editedUnits);
+                            //todo somethings not updating, when you go back to the activity its wrong
                             //goes through ingredientList and updates the ingredient in the list
                             for(int k = 0; k < ingredientList.size(); k++){
                                 if(ingredientList.get(k).equals(ingredientClicked)){

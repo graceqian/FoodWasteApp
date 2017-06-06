@@ -24,12 +24,10 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
 
     public KitchenDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-//        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        db.execSQL("create table " + TABLE_NAME +" (INGREDIENT STRING,QUANTITY REAL,UNITS TEXT)");
 
         String SQL_String = "CREATE TABLE " + TABLE_NAME + "(" + INGREDIENT_COLUMN + " TEXT," +
                 QUANTITY_COLUMN + " REAL," + UNITS_COLUMN + " TEXT)";

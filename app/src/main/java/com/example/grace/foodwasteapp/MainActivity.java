@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setLogo(R.drawable.home_outline_shape);//todo change edit button
+        ab.setLogo(R.drawable.home_outline_shape);//set logo to home icon
         ab.setDisplayUseLogoEnabled(true);//enable logo
         ab.setDisplayHomeAsUpEnabled(true);//enable home
     }
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //registers if user clicks on menu. If they do, the MainActivity refreshes
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         //handle action bar clicks here. The acitonbar will automatically
@@ -41,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //if user clicks the "Enter Kitchen" button, they are redirected to KitchenActivity
     protected void onClickEnterKitchen(View v){
         Intent toKitchen = new Intent(this, KitchenActivity.class);
         startActivity(toKitchen);
     }
 
+    //if user clicks the "Find Recipe" button, they are redirected to FindRecipeActivity
     protected void onClickFindRecipe(View v){
         Intent toFindRecipe = new Intent(this, FindRecipeActivity.class);
         startActivity(toFindRecipe);

@@ -51,7 +51,7 @@ public class FiltersActivity extends AppCompatActivity {
         dietsSelected = new HashSet<String>();
         cuisinesSelected = new HashSet<String>();
 
-        filterTypes = new HashMap<String, List<String>>();//TODO if time permits, add other things like holidays etc
+        filterTypes = new HashMap<String, List<String>>();
 
         List<String> diets = new ArrayList<String>();
         diets.add("Vegetarian");
@@ -96,14 +96,9 @@ public class FiltersActivity extends AppCompatActivity {
 //        //config list view
         expandableListView.setAdapter(adapter);
 
-//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//            @Override
-//            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//                Toast.makeText(FiltersActivity.this, filterTypes.get(filterTypesList.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();                return true;
-//            }
-//        });
 
         callValues = new HashMap<String, String>();
+        //diets
         //http://api.yummly.com/v1/api/metadata/diet?_app_id=26edbdd7&_app_key=e821c0abc1c766b3cd3f2a2c23023113
         callValues.put("Vegetarian","387%5ELacto-ovo vegetarian");
         callValues.put("Vegan","386%5EVegan");
@@ -111,6 +106,7 @@ public class FiltersActivity extends AppCompatActivity {
         callValues.put("Ovo vegetarian","389%5EOvo vegetarian");
         callValues.put("Lacto vegetarian","388%5ELacto vegetarian");
 
+        //allergies
         //http://api.yummly.com/v1/api/metadata/allergy?_app_id=26edbdd7&_app_key=e821c0abc1c766b3cd3f2a2c23023113
         callValues.put("Gluten","393%5EGluten-Free");
         callValues.put("Dairy","396%5EDairy-Free");
@@ -123,6 +119,7 @@ public class FiltersActivity extends AppCompatActivity {
         callValues.put("Tree Nut","395%5ETree Nut-Free");
         callValues.put("Wheat","392%5EWheat-Free");
 
+        //cuisines
         //http://api.yummly.com/v1/api/metadata/cuisine?_app_id=26edbdd7&_app_key=e821c0abc1c766b3cd3f2a2c23023113
         callValues.put("American","cuisine%5Ecuisine-american");
         callValues.put("Italian","cuisine%5Ecuisine-italian");
@@ -228,11 +225,9 @@ public class FiltersActivity extends AppCompatActivity {
         if(checkBox.isChecked()){
             if(filterTypes.get("Allergies").contains(checkBoxText)) {//checked item is an allergy
                 allergiesSelected.add(callValues.get(checkBoxText));
-//                allergiesSelected.add(checkBoxText);
             }
             else if(filterTypes.get("Diets").contains(checkBoxText)){//checked item is a diet
                 dietsSelected.add(callValues.get(checkBoxText));
-//                dietsSelected.add(checkBoxText);
             }
             else{//checked item is a cuisine
                 cuisinesSelected.add(callValues.get(checkBoxText));
@@ -241,11 +236,9 @@ public class FiltersActivity extends AppCompatActivity {
         else{
             if(filterTypes.get("Allergies").contains(checkBoxText)) {//unchecked item is an allergy
                 allergiesSelected.remove(callValues.get(checkBoxText));
-//                allergiesSelected.remove(checkBoxText);
             }
             else if(filterTypes.get("Diets").contains(checkBoxText)){//unchecked item is a diet
                 dietsSelected.remove(callValues.get(checkBoxText));
-//                dietsSelected.remove(checkBoxText);
             }
             else{//unchecked item is a cuisine
                 cuisinesSelected.remove(callValues.get(checkBoxText));
@@ -253,6 +246,8 @@ public class FiltersActivity extends AppCompatActivity {
         }
     }
 
+    //If user clicks the "Filter" button, this method is invoked.
+    //the user is then redirected to the FindRecipeActivity with the appropriate filters established
     protected void onClickFilter(View v){
         Intent toFindRecipe = new Intent(this, FindRecipeActivity.class);
 
@@ -267,6 +262,7 @@ public class FiltersActivity extends AppCompatActivity {
         startActivity(toFindRecipe);
     }
 
+    //creates option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         //inflate the menu; this adds items to the action bar if present
@@ -275,6 +271,7 @@ public class FiltersActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //registers clicks on options menu. Redirects user back to MainActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         //handle action bar clicks here. The acitonbar will automatically

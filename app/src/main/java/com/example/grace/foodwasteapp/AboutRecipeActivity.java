@@ -19,7 +19,6 @@ public class AboutRecipeActivity extends AppCompatActivity {
 
     private List<String> recipeIngredientList;
 
-    //TODO WHEN A RECIPE IS CLICKED, AN INTENT IS PASSED HERE WITH THE MATCH INFORMATION
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +83,7 @@ public class AboutRecipeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //create options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         //inflate the menu; this adds items to the action bar if present
@@ -92,6 +92,7 @@ public class AboutRecipeActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //when home button is pressed, user is redirected to the main activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         //handle action bar clicks here. The acitonbar will automatically
