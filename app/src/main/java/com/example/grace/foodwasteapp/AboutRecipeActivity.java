@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -79,5 +82,24 @@ public class AboutRecipeActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("http://www.yummly.com/recipe/" + getIntent().getStringExtra("id")));
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //inflate the menu; this adds items to the action bar if present
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //handle action bar clicks here. The acitonbar will automatically
+        //handle clicks on the Home/Up button, so long as you
+        //specify a parent activity in AndroidManifest.xml
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
     }
 }

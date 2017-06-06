@@ -9,22 +9,6 @@ import retrofit.http.Query;
 import retrofit.Callback;
 import retrofit.*;
 import java.util.*;
-
-public class YummlyClient {
-    private static YummlyApiInterface sYummlyService;
-
-    public static YummlyApiInterface getYummlyApiClient(){
-        if(sYummlyService == null){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://api.yummly.com/v1")
-                    .build();
-
-            sYummlyService = retrofit.create(YummlyApiInterface.class);
-        }
-
-        return sYummlyService;
-    }
-
     public interface YummlyApiInterface {
         // Request method and URL specified in the annotation
         // Callback for the parsed response is the last parameter
@@ -39,4 +23,3 @@ public class YummlyClient {
 //        @GET("group/{id}/users")
 //        Call<List<User>> groupList(@Path("id") int groupId, @Query("sort") String sort);
     }
-}

@@ -1,22 +1,23 @@
-package com.example.grace.foodwasteapp;
 
-import android.database.Cursor;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.*;
-import android.content.DialogInterface;
+        package com.example.grace.foodwasteapp;
 
-import java.util.ArrayList;
+        import android.database.Cursor;
+        import android.os.Bundle;
+        import android.support.design.widget.FloatingActionButton;
+        import android.support.v7.app.AlertDialog;
+        import android.support.v7.app.AppCompatActivity;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.*;
+        import android.content.DialogInterface;
+
+        import java.util.ArrayList;
 
 public class KitchenActivity extends AppCompatActivity {
 
     KitchenDatabaseHelper kitchen_database;
     Button btnAddIngredient;
-//    TextView KitchenData;
+    //    TextView KitchenData;
     ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();//TODO CHANGE INTO A TREESET?
 
     @Override
@@ -93,16 +94,16 @@ public class KitchenActivity extends AppCompatActivity {
             return;
 
         boolean isInserted = kitchen_database.insertData(ingredient, quantity, units);
-            if (isInserted) {
-                Toast.makeText(KitchenActivity.this, "Ingredient added", Toast.LENGTH_LONG).show();
-                if(units.equals("none")){
-                    units = "";
-                }
-                ingredientList.add(new Ingredient(ingredient, quantity, units));
-                populateListView();//updates list view TODO replace line with add new element method??
+        if (isInserted) {
+            Toast.makeText(KitchenActivity.this, "Ingredient added", Toast.LENGTH_LONG).show();
+            if(units.equals("none")){
+                units = "";
             }
-            else
-                Toast.makeText(KitchenActivity.this, "an error has occurred", Toast.LENGTH_LONG).show();
+            ingredientList.add(new Ingredient(ingredient, quantity, units));
+            populateListView();//updates list view TODO replace line with add new element method??
+        }
+        else
+            Toast.makeText(KitchenActivity.this, "an error has occurred", Toast.LENGTH_LONG).show();
 //        KitchenData = (TextView)findViewById(R.id.tvKitchenData) ;
 //        KitchenData.setText(displayData());
     }
@@ -182,43 +183,43 @@ public class KitchenActivity extends AppCompatActivity {
     }
 
     private class MyListAdapter extends ArrayAdapter<Ingredient>{
-            //https://www.youtube.com/watch?v=3k3CunDZpFk
+        //https://www.youtube.com/watch?v=3k3CunDZpFk
         //https://www.youtube.com/watch?v=WRANgDgM2Zg DrBFraser
         public MyListAdapter() {
-                super(KitchenActivity.this, R.layout.list_ingredients, ingredientList);
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                // Make sure we have a view to work with (may have been given null)
-                View itemView = convertView;
-                if (itemView == null) {
-                    itemView = getLayoutInflater().inflate(R.layout.list_ingredients, parent, false);//create a new view
-                    //inflater takes a piece of xml code and inflates into an object to be displayed on the screen
-                }
-
-                //populating the list
-
-                // Find the car to work with.
-                Ingredient currentIngredient = ingredientList.get(position);
-
-                // Fill the view
-
-                // ingredient:
-                TextView ingredientText = (TextView) itemView.findViewById(R.id.tvDisplayIngredient);
-                ingredientText.setText(currentIngredient.getIngredient());
-
-                // quantity:
-                TextView quantityText = (TextView) itemView.findViewById(R.id.tvDisplayQuantity);
-                quantityText.setText("" + currentIngredient.getQuantity());
-
-                // units:
-                TextView unitsText = (TextView) itemView.findViewById(R.id.tvDisplayUnits);
-                unitsText.setText(currentIngredient.getUnits());
-
-                return itemView;
-            }
+            super(KitchenActivity.this, R.layout.list_ingredients, ingredientList);
         }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // Make sure we have a view to work with (may have been given null)
+            View itemView = convertView;
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.list_ingredients, parent, false);//create a new view
+                //inflater takes a piece of xml code and inflates into an object to be displayed on the screen
+            }
+
+            //populating the list
+
+            // Find the car to work with.
+            Ingredient currentIngredient = ingredientList.get(position);
+
+            // Fill the view
+
+            // ingredient:
+            TextView ingredientText = (TextView) itemView.findViewById(R.id.tvDisplayIngredient);
+            ingredientText.setText(currentIngredient.getIngredient());
+
+            // quantity:
+            TextView quantityText = (TextView) itemView.findViewById(R.id.tvDisplayQuantity);
+            quantityText.setText("" + currentIngredient.getQuantity());
+
+            // units:
+            TextView unitsText = (TextView) itemView.findViewById(R.id.tvDisplayUnits);
+            unitsText.setText(currentIngredient.getUnits());
+
+            return itemView;
+        }
+    }
 
 
     //method is called when the user clicks on a displayed ingredient.

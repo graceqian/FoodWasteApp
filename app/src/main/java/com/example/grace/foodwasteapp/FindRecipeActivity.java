@@ -3,6 +3,9 @@ package com.example.grace.foodwasteapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.SearchView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +31,7 @@ public class FindRecipeActivity extends AppCompatActivity {
     private GetRecipeResponse recipeResponse;
     private final String APP_ID = "26edbdd7";
     private final String APP_KEY = "e821c0abc1c766b3cd3f2a2c23023113";
-    private YummlyClient.YummlyApiInterface client;
+    private YummlyApiInterface client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class FindRecipeActivity extends AppCompatActivity {
                 addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
-        client = retrofit.create(YummlyClient.YummlyApiInterface.class);
+        client = retrofit.create(YummlyApiInterface.class);
         SearchView sv = (SearchView)findViewById(R.id.svRecipeSearch);
         if(getIntent().getStringExtra("query") == null){
             sv.setIconified(false);
@@ -272,5 +275,24 @@ public class FindRecipeActivity extends AppCompatActivity {
         SearchView sv = (SearchView)findViewById(R.id.svRecipeSearch);
         toFilters.putExtra("query", sv.getQuery().toString());
         startActivity(toFilters);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //inflate the menu; this adds items to the action bar if present
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //handle action bar clicks here. The acitonbar will automatically
+        //handle clicks on the Home/Up button, so long as you
+        //specify a parent activity in AndroidManifest.xml
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
     }
 }
