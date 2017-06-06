@@ -1,32 +1,43 @@
 
         package com.example.grace.foodwasteapp;
 
+        import android.content.Intent;
         import android.database.Cursor;
         import android.os.Bundle;
         import android.support.design.widget.FloatingActionButton;
         import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
+        import android.view.Menu;
+        import android.view.MenuInflater;
+        import android.view.MenuItem;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.*;
         import android.content.DialogInterface;
 
         import java.util.ArrayList;
+        import java.util.HashMap;
 
-public class KitchenActivity extends AppCompatActivity {
+        public class KitchenActivity extends AppCompatActivity {
 
     KitchenDatabaseHelper kitchen_database;
     Button btnAddIngredient;
-    //    TextView KitchenData;
-    ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();//TODO CHANGE INTO A TREESET?
+    ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();//TODO make a hashmap??
+    HashMap<String, Integer> spinnerPositions;//<units, position>
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        kitchen_database = new KitchenDatabaseHelper(this);
-
         setContentView(R.layout.activity_kitchen);
+
+        spinnerPositions = new HashMap<String, Integer>();
+        String[] unitsArray = getResources().getStringArray(R.array.units_array);
+        for(int k = 0; k < unitsArray.length; k++){
+            spinnerPositions.put(unitsArray[k], k);
+        }
+
+        kitchen_database = new KitchenDatabaseHelper(this);
 
         //fills ingredientList with info from the kitchen_database
         Cursor result = kitchen_database.getAllData();
@@ -37,8 +48,6 @@ public class KitchenActivity extends AppCompatActivity {
         }
 
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         //Adding ingredients
         FloatingActionButton fabAddIngredient = (FloatingActionButton) findViewById(R.id.fabAddIngredient);
@@ -74,24 +83,16 @@ public class KitchenActivity extends AppCompatActivity {
 
         //populate the list view
         populateListView();
-        //display data
-//        displayData();
         registerClickCallback();
 
-//        //changes content_activity to display ingredients in the kitchen
-//        KitchenData = (TextView)findViewById(R.id.tvKitchenData) ;
-//        KitchenData.setText(displayData());
 
     }
 
-
+    //Puts an ingredient in the database based on the texts of the views passed into the method
     protected void addIngredientData(EditText etIngredient, EditText etQuantity, Spinner spinnerUnits){
         String ingredient  = etIngredient.getText().toString();
         Double quantity = Double.parseDouble(etQuantity.getText().toString());
         String units = spinnerUnits.getSelectedItem().toString();
-
-        if(ingredientExists(ingredient))
-            return;
 
         boolean isInserted = kitchen_database.insertData(ingredient, quantity, units);
         if (isInserted) {
@@ -100,58 +101,9 @@ public class KitchenActivity extends AppCompatActivity {
                 units = "";
             }
             ingredientList.add(new Ingredient(ingredient, quantity, units));
-            populateListView();//updates list view TODO replace line with add new element method??
         }
         else
             Toast.makeText(KitchenActivity.this, "an error has occurred", Toast.LENGTH_LONG).show();
-//        KitchenData = (TextView)findViewById(R.id.tvKitchenData) ;
-//        KitchenData.setText(displayData());
-    }
-
-    //returns true if the ingredient in the parameter already exists in the database
-    //and displays a dialog message saying the ingredient already exists
-    private boolean ingredientExists(String ingredient){
-        String query = "select * from Kitchen_table where ingredient=\""+ ingredient + "\"";
-        Cursor cs = kitchen_database.getDatabase().rawQuery(query, null);
-        //if the database already has the ingredient
-        if(cs.getCount() != 0){
-            AlertDialog alertDialog = new AlertDialog.Builder(KitchenActivity.this).create();
-            alertDialog.setTitle("Alert");
-            alertDialog.setMessage("Ingredient already in kitchen");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            //TODO make alert centered
-            alertDialog.show();
-            return true;
-        }
-        return false;
-    }
-    //TODO delete poluate list view?
-    //displays data
-    public String displayData(){
-//        Cursor result = kitchen_database.getAllData();
-//
-////        if there is no data
-//        if(result.getCount() == 0){
-//            //show message
-//            return "Your kitchen is empty! Press the + to start adding ingredients.";
-//        }
-//
-//        StringBuffer buffer = new StringBuffer();
-////        get the data one by one
-//        while (result.moveToNext()){
-//            buffer.append("Ingredient: " + result.getString(0) + "\n" +
-//                    "Quantity: " + result.getString(1) + "\n" +
-//                    "Units: " + result.getString(2) + "\n\n");
-//        }
-//        return buffer.toString();
-        return null;
-
-
     }
 
     //populates the listview to display ingredients currently in the kitchen
@@ -183,12 +135,15 @@ public class KitchenActivity extends AppCompatActivity {
     }
 
     private class MyListAdapter extends ArrayAdapter<Ingredient>{
+        //Tutorial Videos:
         //https://www.youtube.com/watch?v=3k3CunDZpFk
         //https://www.youtube.com/watch?v=WRANgDgM2Zg DrBFraser
+
         public MyListAdapter() {
             super(KitchenActivity.this, R.layout.list_ingredients, ingredientList);
         }
 
+        //gives the passes data to the ListView to display
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // Make sure we have a view to work with (may have been given null)
@@ -200,7 +155,7 @@ public class KitchenActivity extends AppCompatActivity {
 
             //populating the list
 
-            // Find the car to work with.
+            // Find the ingredient to work with.
             Ingredient currentIngredient = ingredientList.get(position);
 
             // Fill the view
@@ -231,35 +186,33 @@ public class KitchenActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-//                TextView textView = (TextView) viewClicked;
-//                String message = "You clicked #" + position + " which is string: " + textView.getText().toString();
-//                Toast.makeText(KitchenActivity.this, message, Toast.LENGTH_SHORT).show();
 
                 //edit dialog appears
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(KitchenActivity.this);
                 mBuilder.setCancelable(true);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_edit_ingredient, null);
 
-                //TODO edit text in dialog to match the ingredient the user clicked
-//                TextView textView = (TextView) viewClicked;
-//                EditText etIngredient = ((EditText)mView.findViewById(R.id.etEditIngredient)).setText(textView.getText().toString());
-//                EditText etQuantity = (EditText)mView.findViewById(R.id.etEditQuantity);
-//                Spinner spinnerUnits = (Spinner)mView.findViewById(R.id.spinnerUnits);
 
                 final Ingredient ingredientClicked = ingredientList.get(position);
                 final String ingredient = ingredientClicked.getIngredient();
                 final double quantity = ingredientClicked.getQuantity();
-                final String units = ingredientClicked.getUnits();
+                final String units;
+                if(ingredientClicked.getUnits().equals("")){
+                    units = "none";
+                } else{
+                    units = ingredientClicked.getUnits();
+                }
 
                 //sets text boxes in dialog to match ingredient logged
                 ((TextView)mView.findViewById(R.id.tvEditIngredient)).setText(ingredient);
                 ((EditText)mView.findViewById(R.id.etEditQuantity)).setText(quantity + "");
-//                ((Spinner)mView.findViewById(R.id.spinnerUnits)).setSelection(0);//TODO find what positon
+                boolean asdf = ((Spinner)mView.findViewById(R.id.spinnerEditUnits)) == null;
+                ((Spinner)mView.findViewById(R.id.spinnerEditUnits)).setSelection(spinnerPositions.get(units));//TODO find what positon
 
                 //define view in layout and change variables to be final
                 final TextView tvEditIngredient = ((TextView)mView.findViewById(R.id.tvEditIngredient));
                 final EditText etQuantity = (EditText)mView.findViewById(R.id.etEditQuantity);
-                final Spinner spinnerUnits = (Spinner)mView.findViewById(R.id.spinnerUnits);
+                final Spinner spinnerUnits = (Spinner)mView.findViewById(R.id.spinnerEditUnits);
 
 
                 mBuilder.setView(mView);
@@ -267,24 +220,26 @@ public class KitchenActivity extends AppCompatActivity {
 
                 //HANDLING UPDATING INGREDIENTS
                 Button btnUpdateIngredient = (Button)mView.findViewById(R.id.btnUpdateIngredient);
-                //todo i change my mind they shouldn't be allowed to edit the ingredient name
                 btnUpdateIngredient.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         String editedIngredient = tvEditIngredient.getText().toString();
                         Double editedQuantity = Double.parseDouble(etQuantity.getText().toString());
-//                        String editedUnits = spinnerUnits.getSelectedItem().toString();
+                        String editedUnits = spinnerUnits.getSelectedItem().toString();
                         if(!tvEditIngredient.getText().toString().isEmpty() &&
                                 !etQuantity.getText().toString().isEmpty()){
-                            //TODO UPDATE INSTEAD OF ADD
-                            kitchen_database.updateData(ingredient, quantity, units);
+//                            kitchen_database.updateData(ingredient, quantity, units);
+                            kitchen_database.updateData(ingredient, editedQuantity, editedUnits);
                             //goes through ingredientList and updates the ingredient in the list
                             for(int k = 0; k < ingredientList.size(); k++){
                                 if(ingredientList.get(k).equals(ingredientClicked)){
-                                    if(units.equals("none"))
+                                    if(editedUnits.equals("none"))
                                         ingredientList.set(k, new Ingredient(editedIngredient, editedQuantity, ""));
-                                    else
-                                        ingredientList.set(k, new Ingredient(editedIngredient, editedQuantity, units));//todo change to editedUnits
+                                    else {
+                                        if(editedUnits.equals("none"))
+                                            editedUnits = "";
+                                        ingredientList.set(k, new Ingredient(editedIngredient, editedQuantity, editedUnits));
+                                    }
                                 }
                             }
                             kitchen_database.updateData(editedIngredient,editedQuantity, units);
@@ -322,4 +277,22 @@ public class KitchenActivity extends AppCompatActivity {
             }
         });
     }
+            @Override
+            public boolean onCreateOptionsMenu(Menu menu){
+                //inflate the menu; this adds items to the action bar if present
+                MenuInflater menuInflater = getMenuInflater();
+                menuInflater.inflate(R.menu.main_activity_menu, menu);
+                return super.onCreateOptionsMenu(menu);
+            }
+
+            @Override
+            public boolean onOptionsItemSelected(MenuItem item){
+                //handle action bar clicks here. The acitonbar will automatically
+                //handle clicks on the Home/Up button, so long as you
+                //specify a parent activity in AndroidManifest.xml
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                int id = item.getItemId();
+                return super.onOptionsItemSelected(item);
+            }
 }
