@@ -78,101 +78,9 @@ public class FindRecipeActivity extends AppCompatActivity {
 
         });
 
-        //Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY,"onion+soup");
-
-//        //must call api asynchronously because there is a UI thread
-//        call.enqueue(new Callback<GetRecipeResponse>() {
-//            @Override
-//            public void onResponse(Response<GetRecipeResponse> response, Retrofit retrofit) {
-//                recipeResponse = response.body();
-//                if(recipeResponse == null)
-//                    Toast.makeText(FindRecipeActivity.this, "its null" , Toast.LENGTH_SHORT).show();
-//
-//                //build adapter
-//                ArrayAdapter<Match> adapter = new RecipeAdapter();
-//
-//                //config list view
-//                ListView list = (ListView)findViewById(R.id.lvRecipes);
-//                list.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Toast.makeText(FindRecipeActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         registerRecipeClickCallback();
     }
 
-//    protected void onStart(){
-//        super.onStart();
-//
-//        setContentView(R.layout.activity_find_recipe);
-//
-//        SearchView sv = (SearchView)findViewById(R.id.svRecipeSearch);
-//        sv.setQuery(getIntent().getStringExtra("query"), true);
-//        sv.clearFocus();
-//        Intent asdf = getIntent();
-//
-//        Retrofit.Builder builder = new Retrofit.Builder().
-//                baseUrl("http://api.yummly.com/v1").
-//                addConverterFactory(GsonConverterFactory.create());
-//
-//        Retrofit retrofit = builder.build();
-//        final YummlyClient.YummlyApiInterface client = retrofit.create(YummlyClient.YummlyApiInterface.class);
-//
-//        //handling queries in search bar
-//        final SearchView searchView = (SearchView) findViewById(R.id.svRecipeSearch);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                callSearch(query);
-//                searchView.clearFocus();
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-////              if (searchView.isExpanded() && TextUtils.isEmpty(newText)) {
-//                callSearch(newText);
-////              }
-//                return true;
-//            }
-//
-//            public void callSearch(String query) {
-//                List<String> allergiesSelected = getIntent().getStringArrayListExtra("allergies selected");
-//                List<String> dietsSelected = getIntent().getStringArrayListExtra("diets selected");
-//                Call<GetRecipeResponse> call = client.getRecipeResponse(APP_ID, APP_KEY,query, allergiesSelected, dietsSelected);
-//
-//                //must call api asynchronously because there is a UI thread
-//                call.enqueue(new Callback<GetRecipeResponse>() {
-//                    @Override
-//                    public void onResponse(Response<GetRecipeResponse> response, Retrofit retrofit) {
-//                        recipeResponse = response.body();
-//                        if(recipeResponse == null)
-//                            Toast.makeText(FindRecipeActivity.this, "its null" , Toast.LENGTH_SHORT).show();
-//
-//                        //build adapter
-//                        ArrayAdapter<Match> adapter = new RecipeAdapter();
-//
-//                        //config list view
-//                        ListView list = (ListView)findViewById(R.id.lvRecipes);
-//                        list.setAdapter(adapter);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable t) {
-//                        Toast.makeText(FindRecipeActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//        });
-//
-//        registerRecipeClickCallback();
-//
-//    }
 
     public void callApi(String query){
         List<String> allergiesSelected = getIntent().getStringArrayListExtra("allergies selected");
@@ -270,6 +178,8 @@ public class FindRecipeActivity extends AppCompatActivity {
         });
     }
 
+    //WHen users click the filters button, they are redirected to the FiltersActivity
+    //the query is passed to the FitlersActivity
     protected void onClickFilters(View v){
         Intent toFilters = new Intent(this, FiltersActivity.class);
         SearchView sv = (SearchView)findViewById(R.id.svRecipeSearch);
@@ -277,6 +187,7 @@ public class FindRecipeActivity extends AppCompatActivity {
         startActivity(toFilters);
     }
 
+    //create options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         //inflate the menu; this adds items to the action bar if present
@@ -284,6 +195,7 @@ public class FindRecipeActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.main_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

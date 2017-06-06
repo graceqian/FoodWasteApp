@@ -14,7 +14,12 @@ import java.util.*;
         // Callback for the parsed response is the last parameter
 
         //parameters for query search, allowedAllergies, allowedDiets, and allowed Cuisines
-        @GET("/v1/api/recipes")//at 24 minutes is when he explains the interface
-        Call<GetRecipeResponse> getRecipeResponse(@Query("_app_id") String id, @Query("_app_key") String appKey, @Query("q") String search, @Query(value = "allowedAllergy%5b%5d", encoded = true) List<String> allergies, @Query(value = "allowedDiet%5b%5d", encoded = true) List<String> diets, @Query(value = "allowedCuisine%5b%5d", encoded = true) List<String> cuisine);
+        @GET("/v1/api/recipes")
+        Call<GetRecipeResponse> getRecipeResponse(@Query("_app_id") String id,
+                                                  @Query("_app_key") String appKey,
+                                                  @Query("q") String search,
+                                                  @Query(value = "allowedAllergy%5b%5d", encoded = true) List<String> allergies,
+                                                  @Query(value = "allowedDiet%5b%5d", encoded = true) List<String> diets,
+                                                  @Query(value = "allowedCuisine%5b%5d", encoded = true) List<String> cuisine);
 
     }
