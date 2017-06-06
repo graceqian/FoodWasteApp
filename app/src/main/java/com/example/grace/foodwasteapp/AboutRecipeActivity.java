@@ -52,6 +52,7 @@ public class AboutRecipeActivity extends AppCompatActivity {
             super(AboutRecipeActivity.this, R.layout.list_simple, recipeIngredientList);
         }
 
+        //Get a View that displays the data at the specified position in the data set.
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // Make sure we have a view to work with (may have been given null)

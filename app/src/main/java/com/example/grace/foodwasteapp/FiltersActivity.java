@@ -137,11 +137,13 @@ public class FiltersActivity extends AppCompatActivity {
 
     private class FilterTypesAdapter extends BaseExpandableListAdapter {
 
+        //returns the number of types of group Views that will be created by getGroupView(int, boolean, View, ViewGroup) .
         @Override
         public int getGroupCount() {
             return filterTypes.size();
         }
 
+        //Returns the number of types of child Views that will be created by getChildView(int, int, boolean, View, ViewGroup)
         @Override
         public int getChildrenCount(int groupPosition) {
             return filterTypes.get(filterTypesList.get(groupPosition)).size();
@@ -152,27 +154,32 @@ public class FiltersActivity extends AppCompatActivity {
             return filterTypesList.get(groupPosition);
         }
 
-        //returns current child as an object
+        //Get the type of child View that will be created by getChildView(int, int, boolean, View, ViewGroup) for the specified child item.
         @Override
         public Object getChild(int parent, int child) {
             return filterTypes.get(filterTypesList.get(parent)).get(child);
         }
 
+        //returns the position of the group
         @Override
         public long getGroupId(int groupPosition) {
             return groupPosition;
         }
 
+        //returns the position of the child in the parent group
         @Override
         public long getChildId(int parent, int child) {
             return child;
         }
 
+        //returns false
         @Override
         public boolean hasStableIds() {
             return false;
         }
 
+        //Gets a View that displays the given group. This View is only for the group--
+        // the Views for the group's children will be fetched using getChildView(int, int, boolean, View, ViewGroup).
         @Override
         public View getGroupView(int parent, boolean isExpanded, View convertView, ViewGroup parentView) {
             String filterTypeTitle = (String) getGroup(parent);
@@ -186,6 +193,7 @@ public class FiltersActivity extends AppCompatActivity {
             return convertView;
         }
 
+        //Gets a View that displays the data for the given child within the given group.
         @Override
         public View getChildView(int parent, int child, boolean isLastChild, View convertView, ViewGroup parentView) {
             String filterTitle = (String) getChild(parent, child);//returns current child
@@ -211,6 +219,7 @@ public class FiltersActivity extends AppCompatActivity {
             return convertView;
         }
 
+        //returns whether the child at the specified position is selectable.
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;

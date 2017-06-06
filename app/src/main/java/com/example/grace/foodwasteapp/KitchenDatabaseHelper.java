@@ -35,6 +35,7 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
 
     }
 
+    //insert data into the kitchen database
     public boolean insertData(String ingredient, Double quantity, String units){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -49,12 +50,14 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
         return -1 != db.insert(TABLE_NAME, null, contentValues);
     }
 
+    //called whenever the app is upgraded and launched and the database version is not the same.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }
 
+    //returns an object of Type Cursor which contains all the data from the "kitchen" table
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT  * FROM " + TABLE_NAME;
@@ -62,6 +65,8 @@ public class KitchenDatabaseHelper extends SQLiteOpenHelper implements Serializa
         return res;
     }
 
+    //returns true
+    //replaces the quantity and units in the row of the given ingredient
     public boolean updateData(String ingredient,Double quantity,String units) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
